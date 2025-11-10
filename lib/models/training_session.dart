@@ -1,17 +1,40 @@
+enum TrainingLocation { gym, home, outdoor }
+
 class TrainingSession {
   final String id;
+  final TrainingLocation location;
   final String title;
   final DateTime date;
-  final Duration duration;
+  final DateTime startDate;
+  DateTime? endDate;
   final List<Exercise> exercises;
 
-  TrainingSession({required this.id, required this.title, required this.date, required this.duration, required this.exercises});
+  Duration get duration {
+    final end = endDate ?? DateTime.now();
+    return end.difference(startDate);
+  }
+
+  String get locationString {
+    return '${location.toString().split('.').last[0].toUpperCase()}${location.toString().split('.').last.substring(1)}';
+  }
+
+  TrainingSession({
+    required this.id,
+    required this.location,
+    required this.title,
+    required this.date,
+    required this.exercises,
+    required this.startDate,
+    this.endDate,
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
       'date': date.toIso8601String(),
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
       'duration': duration.inMinutes,
       'exercises': exercises.map((exercise) => exercise.toJson()).toList(),
     };
@@ -19,7 +42,7 @@ class TrainingSession {
 
   @override
   String toString() {
-    return 'TrainingSession{id: $id, title: $title, date: $date, duration: ${duration.inMinutes} minutes, exercises: $exercises}';
+    return 'TrainingSession{id: $id, title: $title, date: $date, duration: ${duration.inMinutes} minutes, exercises: $exercises} ';
   }
 }
 
@@ -27,6 +50,7 @@ class Exercise {
   final String id;
   final String name;
   final List<Set> sets;
+  int targetSets = 3;
 
   Exercise({required this.name, required this.sets, required this.id});
 

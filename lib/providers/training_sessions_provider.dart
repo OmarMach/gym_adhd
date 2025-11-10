@@ -50,10 +50,24 @@ class TrainingSessionsProvider with ChangeNotifier {
     }
   }
 
+  void removeSession(String sessionId) {
+    if (selectedSession != null) {
+      sessions.removeWhere((ss) => ss.id == sessionId);
+      notifyListeners();
+    }
+  }
+
   void removeSet(String exerciseId, String setId) {
     if (selectedSession != null) {
       final exercise = selectedSession!.exercises.firstWhere((ex) => ex.id == exerciseId, orElse: () => throw Exception('Exercise not found'));
       exercise.sets.removeWhere((s) => s.id == setId);
+      notifyListeners();
+    }
+  }
+
+  void endSession() {
+    if (selectedSession != null && selectedSession!.endDate == null) {
+      selectedSession!.endDate = DateTime.now();
       notifyListeners();
     }
   }

@@ -16,6 +16,8 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
   final _dateController = TextEditingController();
   final _durationController = TextEditingController();
 
+  TrainingLocation _selectedLocation = TrainingLocation.gym;
+
   @override
   void initState() {
     _titleController.text = 'Session X';
@@ -66,15 +68,32 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
                   return null;
                 },
               ),
+              Row(
+                children: [
+                  const Text('Location: '),
+                  DropdownButton<TrainingLocation>(
+                    value: _selectedLocation,
+                    items: TrainingLocation.values.map((location) {
+                      return DropdownMenuItem(value: location, child: Text(location.toString().split('.').last));
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedLocation = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final newSession = TrainingSession(
                       id: DateTime.now().toString(),
+                      location: _selectedLocation,
                       title: _titleController.text,
                       date: DateTime.parse(_dateController.text),
-                      duration: Duration(minutes: int.parse(_durationController.text)),
+                      startDate: DateTime.now(),
                       exercises: [],
                     );
                     final provider = getTrainingSessionsProviderWithoutListener(context);
