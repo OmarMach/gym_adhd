@@ -22,17 +22,22 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: false,
             brightness: Brightness.dark,
-            canvasColor: Colors.black,
-            primaryColor: AppColors.neonBlue,
+            canvasColor: AppColors.richBlack,
+            primaryColor: AppColors.softSage,
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.neonBlue,
+                backgroundColor: AppColors.caribbeanGreen,
                 foregroundColor: Colors.black,
                 minimumSize: const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
-            appBarTheme: const AppBarTheme(backgroundColor: Colors.black12, foregroundColor: Colors.white, centerTitle: true, elevation: 0),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: AppColors.richBlack,
+              foregroundColor: AppColors.caribbeanGreen,
+              centerTitle: true,
+              elevation: 0,
+            ),
           ),
         );
       },
