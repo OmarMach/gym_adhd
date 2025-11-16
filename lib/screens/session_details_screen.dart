@@ -3,6 +3,7 @@ import 'package:gym_adhd/config/context.dart';
 import 'package:gym_adhd/config/exercises_list.dart';
 import 'package:gym_adhd/models/training_session.dart';
 import 'package:gym_adhd/providers/training_sessions_provider.dart';
+import 'package:gym_adhd/screens/exercise_screen.dart';
 import 'package:provider/provider.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -256,11 +257,32 @@ class SessionDetailsScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                provider.removeExercise(exercise.id);
-                              },
-                              icon: const Icon(Icons.close),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    provider.removeExercise(exercise.id);
+                                  },
+                                  icon: const Icon(Icons.close),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    provider.setSelectedExercise(exercise);
+                                    Navigator.pushNamed(context, ExerciseScreen.routeName);
+                                  },
+                                  icon: const Icon(Icons.arrow_forward),
+                                ),
+                              ),
                             ),
                           ],
                         );

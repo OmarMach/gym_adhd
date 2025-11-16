@@ -5,6 +5,7 @@ class TrainingSessionsProvider with ChangeNotifier {
   final List<TrainingSession> _sessions = [];
 
   TrainingSession? selectedSession;
+  Exercise? selectedExercise;
 
   List<TrainingSession> get sessions => List.unmodifiable(_sessions);
 
@@ -15,6 +16,11 @@ class TrainingSessionsProvider with ChangeNotifier {
 
   void setSelectedSession(TrainingSession session) {
     selectedSession = session;
+    notifyListeners();
+  }
+
+  void setSelectedExercise(Exercise exercise) {
+    selectedExercise = exercise;
     notifyListeners();
   }
 

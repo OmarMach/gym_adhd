@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gym_adhd/config/colors.dart';
+import 'package:gym_adhd/config/isar_config.dart';
 import 'package:gym_adhd/config/routes.dart';
 import 'package:gym_adhd/providers/training_sessions_provider.dart';
 import 'package:gym_adhd/screens/sessions_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initIsar();
+  await importExercisesIfNeeded();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +22,6 @@ class MyApp extends StatelessWidget {
       providers: [ChangeNotifierProvider(create: (_) => TrainingSessionsProvider())],
       builder: (context, _) {
         return MaterialApp(
-          title: 'Material App',
           routes: routes,
           home: const SessionsScreen(),
           theme: ThemeData(
