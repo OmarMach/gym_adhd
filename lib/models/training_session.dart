@@ -1,6 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:gym_adhd/models/exercise.dart';
 
 enum TrainingLocation { gym, home, outdoor }
+
+generateTrainingLocationIcon(TrainingLocation location) {
+  switch (location) {
+    case TrainingLocation.gym:
+      return Icons.fitness_center;
+    case TrainingLocation.home:
+      return Icons.home;
+    case TrainingLocation.outdoor:
+      return Icons.park;
+  }
+}
 
 class TrainingSession {
   final String id;

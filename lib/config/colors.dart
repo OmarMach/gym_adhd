@@ -18,4 +18,10 @@ abstract final class AppColors {
   static const Color bgGreen = Color(0xFF03624c);
   static const Color antiFlashWhite = Color(0xfff1f7f7);
   static const Color caribbeanGreen = Color(0xFF00df82);
+
+  static const Color black = Color(0xff000000);
+  static const Color black88 = Color(0xff1b1b1b);
+  static const Color white = Color(0xffffffff);
+  static const Color fitGreen = Color(0xffaffa01);
+  static const Color fitGreen40 = Color(0xffcfed89);
 }

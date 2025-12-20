@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: false,
             brightness: Brightness.dark,
-            canvasColor: AppColors.richBlack,
-            primaryColor: AppColors.softSage,
+            canvasColor: AppColors.black,
+            primaryColor: AppColors.fitGreen,
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.caribbeanGreen,
+                backgroundColor: AppColors.fitGreen,
                 foregroundColor: Colors.black,
                 minimumSize: const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -39,18 +39,36 @@ class MyApp extends StatelessWidget {
             ),
             outlinedButtonTheme: OutlinedButtonThemeData(
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.caribbeanGreen),
-                foregroundColor: AppColors.caribbeanGreen,
+                side: const BorderSide(color: AppColors.fitGreen),
+                foregroundColor: AppColors.fitGreen,
                 minimumSize: const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: AppColors.richBlack,
-              foregroundColor: AppColors.caribbeanGreen,
-              centerTitle: true,
-              elevation: 0,
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: AppColors.black88,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: AppColors.fitGreen),
+              ),
+              labelStyle: const TextStyle(color: AppColors.fitGreen),
+              hintStyle: const TextStyle(color: AppColors.grayBlue),
+              suffixIconColor: AppColors.fitGreen40,
             ),
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: AppColors.black,
+              headerBackgroundColor: AppColors.fitGreen,
+              headerForegroundColor: AppColors.black,
+              dayForegroundColor: WidgetStateProperty.all(AppColors.fitGreen),
+              todayForegroundColor: WidgetStateProperty.all(AppColors.caribbeanGreen),
+              cancelButtonStyle: TextButton.styleFrom(foregroundColor: AppColors.greenTea),
+              confirmButtonStyle: TextButton.styleFrom(foregroundColor: AppColors.fitGreen),
+              rangeSelectionBackgroundColor: AppColors.fitGreen40,
+              todayBackgroundColor: WidgetStatePropertyAll(Colors.transparent),
+            ),
+            appBarTheme: const AppBarTheme(backgroundColor: AppColors.black, foregroundColor: AppColors.fitGreen, centerTitle: true, elevation: 0),
           ),
         );
       },
