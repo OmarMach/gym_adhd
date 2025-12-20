@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gym_adhd/config/context.dart';
-import 'package:gym_adhd/config/isar_config.dart';
-import 'package:gym_adhd/models/exercise.dart';
 import 'package:gym_adhd/models/training_session.dart';
 import 'package:gym_adhd/providers/training_sessions_provider.dart';
 import 'package:gym_adhd/screens/exercise_screen.dart';
 import 'package:gym_adhd/widgets/exercices_list_widget.dart';
-import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
