@@ -37,6 +37,14 @@ class MyApp extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
+            outlinedButtonTheme: OutlinedButtonThemeData(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: AppColors.caribbeanGreen),
+                foregroundColor: AppColors.caribbeanGreen,
+                minimumSize: const Size(double.infinity, 48),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
             appBarTheme: const AppBarTheme(
               backgroundColor: AppColors.richBlack,
               foregroundColor: AppColors.caribbeanGreen,

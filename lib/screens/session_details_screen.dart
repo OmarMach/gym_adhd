@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gym_adhd/config/context.dart';
-import 'package:gym_adhd/config/exercises_list.dart';
+import 'package:gym_adhd/config/isar_config.dart';
+import 'package:gym_adhd/models/exercise.dart';
 import 'package:gym_adhd/models/training_session.dart';
 import 'package:gym_adhd/providers/training_sessions_provider.dart';
 import 'package:gym_adhd/screens/exercise_screen.dart';
+import 'package:gym_adhd/widgets/exercices_list_widget.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -63,47 +66,7 @@ class SessionDetailsScreen extends StatelessWidget {
                                         return SafeArea(
                                           child: Padding(
                                             padding: EdgeInsets.all(16),
-                                            child: SizedBox(
-                                              height: MediaQuery.of(context).size.height * 0.5,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text('Add Exercise'),
-                                                  Text('Please select the exercise from the list below'),
-                                                  Expanded(
-                                                    child: ListView.builder(
-                                                      itemCount: exercisesList.length,
-
-                                                      itemBuilder: (BuildContext context, int index) {
-                                                        return ListTile(
-                                                          leading: Container(
-                                                            width: 40,
-                                                            height: 40,
-                                                            decoration: BoxDecoration(
-                                                              color: Colors.blueAccent,
-                                                              borderRadius: BorderRadius.circular(8),
-                                                            ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                exercisesList[index][0],
-                                                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          title: Text(exercisesList[index]),
-                                                          onTap: () {
-                                                            getTrainingSessionsProviderWithoutListener(
-                                                              context,
-                                                            ).addExercise(Exercise(id: UniqueKey().toString(), name: exercisesList[index], sets: []));
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                            child: SizedBox(height: MediaQuery.of(context).size.height * 0.5, child: ExercisesListWidget()),
                                           ),
                                         );
                                       },
@@ -128,7 +91,7 @@ class SessionDetailsScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: session.exercises.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final exercise = session.exercises[index];
+                        final exerciseInstance = session.exercises[index];
                         return Stack(
                           children: [
                             Container(
@@ -142,104 +105,26 @@ class SessionDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
-                                    exercise.name,
+                                    exerciseInstance.exercise.name,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                  Text('Target sets - ${exercise.targetSets}', textAlign: TextAlign.center),
+                                  Text('Target sets - ${exerciseInstance.targetSets}', textAlign: TextAlign.center),
                                   const Divider(),
                                   ListView.builder(
-                                    itemCount: exercise.sets.length,
+                                    itemCount: exerciseInstance.sets.length,
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder: (BuildContext context, int index) {
-                                      final Set setValue = exercise.sets[index];
+                                      final Set setValue = exerciseInstance.sets[index];
                                       return Stack(
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.symmetric(vertical: 4),
-                                            padding: const EdgeInsets.symmetric(vertical: 4),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.grey.shade400),
-                                              borderRadius: BorderRadius.circular(8),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Text('Set ${index + 1}'),
-                                                Row(
-                                                  children: [
-                                                    Expanded(child: Text('Target reps - ${setValue.targetReps}', textAlign: TextAlign.center)),
-                                                    Expanded(child: Text('Target weight - ${setValue.targetWeight} kg', textAlign: TextAlign.center)),
-                                                  ],
-                                                ),
-                                                Divider(),
-                                                Container(
-                                                  width: 300,
-                                                  height: 5,
-                                                  decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(8)),
-                                                  child: FractionallySizedBox(
-                                                    alignment: Alignment.centerLeft,
-                                                    widthFactor: (setValue.reps / 10).clamp(0.0, 1.0),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: setValue.reps >= 10 ? Colors.green : Colors.blueAccent,
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          provider.editSet(exercise.id, setValue.id, setValue.weight - 1, setValue.reps);
-                                                        },
-                                                        icon: const Icon(Icons.remove),
-                                                      ),
-                                                    ),
-                                                    Text('${setValue.weight} kg'),
-                                                    Expanded(
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          provider.editSet(exercise.id, setValue.id, setValue.weight + 1, setValue.reps);
-                                                        },
-                                                        icon: const Icon(Icons.add),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          provider.editSet(exercise.id, setValue.id, setValue.weight, setValue.reps - 1);
-                                                        },
-                                                        icon: const Icon(Icons.remove),
-                                                      ),
-                                                    ),
-                                                    Text('${setValue.reps} Rep'),
-                                                    Expanded(
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          provider.editSet(exercise.id, setValue.id, setValue.weight, setValue.reps + 1);
-                                                        },
-                                                        icon: const Icon(Icons.add),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                           Positioned(
                                             top: 0,
                                             right: 0,
                                             child: IconButton(
                                               onPressed: () {
-                                                provider.removeSet(exercise.id, setValue.id);
+                                                provider.removeSet(exerciseInstance.id, setValue.id);
                                               },
                                               icon: const Icon(Icons.close),
                                             ),
@@ -250,7 +135,7 @@ class SessionDetailsScreen extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      provider.addSet(exercise.id, Set(id: UniqueKey().toString(), weight: 50, reps: 10));
+                                      provider.addSet(exerciseInstance.id, Set(id: UniqueKey().toString(), weight: 50, reps: 10));
                                     },
                                     child: const Text('Add Set'),
                                   ),
@@ -264,7 +149,7 @@ class SessionDetailsScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    provider.removeExercise(exercise.id);
+                                    provider.removeExercise(exerciseInstance.id);
                                   },
                                   icon: const Icon(Icons.close),
                                 ),
@@ -277,7 +162,7 @@ class SessionDetailsScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    provider.setSelectedExercise(exercise);
+                                    provider.setSelectedExercise(exerciseInstance);
                                     Navigator.pushNamed(context, ExerciseScreen.routeName);
                                   },
                                   icon: const Icon(Icons.arrow_forward),

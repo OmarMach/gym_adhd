@@ -1,3 +1,5 @@
+import 'package:gym_adhd/models/exercise.dart';
+
 enum TrainingLocation { gym, home, outdoor }
 
 class TrainingSession {
@@ -7,7 +9,7 @@ class TrainingSession {
   final DateTime date;
   final DateTime startDate;
   DateTime? endDate;
-  final List<Exercise> exercises;
+  final List<ExerciseInstance> exercises;
 
   Duration get duration {
     final end = endDate ?? DateTime.now();
@@ -46,16 +48,16 @@ class TrainingSession {
   }
 }
 
-class Exercise {
+class ExerciseInstance {
   final String id;
-  final String name;
+  final Exercise exercise;
   final List<Set> sets;
   int targetSets = 3;
 
-  Exercise({required this.name, required this.sets, required this.id});
+  ExerciseInstance({required this.exercise, required this.sets, required this.id});
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'sets': sets.map((set) => set.toJson()).toList()};
+    return {'id': id, 'name': exercise.name, 'sets': sets.map((set) => set.toJson()).toList()};
   }
 }
 

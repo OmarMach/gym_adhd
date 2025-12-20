@@ -9,7 +9,6 @@ late Isar isar;
 
 Future<void> initIsar() async {
   final dir = await getApplicationDocumentsDirectory();
-
   isar = await Isar.open([ExerciseSchema], directory: dir.path);
 }
 

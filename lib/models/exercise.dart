@@ -19,6 +19,8 @@ class Exercise {
   List<String> instructions = [];
   List<String> images = [];
 
+  List<String> get imagesUrl => images.map((e) => 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/$e').toList();
+
   Exercise({required this.exerciseId, required this.name, this.force, this.level, this.mechanic, this.equipment, required this.category});
 
   factory Exercise.fromJson(Map<String, dynamic> json) {

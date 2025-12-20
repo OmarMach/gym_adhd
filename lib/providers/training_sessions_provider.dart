@@ -5,7 +5,7 @@ class TrainingSessionsProvider with ChangeNotifier {
   final List<TrainingSession> _sessions = [];
 
   TrainingSession? selectedSession;
-  Exercise? selectedExercise;
+  ExerciseInstance? selectedExercise;
 
   List<TrainingSession> get sessions => List.unmodifiable(_sessions);
 
@@ -19,12 +19,12 @@ class TrainingSessionsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedExercise(Exercise exercise) {
+  void setSelectedExercise(ExerciseInstance exercise) {
     selectedExercise = exercise;
     notifyListeners();
   }
 
-  void addExercise(Exercise exercise) {
+  void addExercise(ExerciseInstance exercise) {
     if (selectedSession != null) {
       selectedSession!.exercises.add(exercise);
       notifyListeners();
@@ -39,10 +39,9 @@ class TrainingSessionsProvider with ChangeNotifier {
     }
   }
 
-  void editSet(String exerciseId, String setId, int newWeight, int newReps) {
-    if (selectedSession != null) {
-      final exercise = selectedSession!.exercises.firstWhere((ex) => ex.id == exerciseId, orElse: () => throw Exception('Exercise not found'));
-      final set = exercise.sets.firstWhere((s) => s.id == setId, orElse: () => throw Exception('Set not found'));
+  void editSet(String setId, int newWeight, int newReps) {
+    if (selectedSession != null && selectedExercise != null) {
+      final set = selectedExercise!.sets.firstWhere((s) => s.id == setId, orElse: () => throw Exception('Set not found'));
       set.weight = newWeight;
       set.reps = newReps;
       notifyListeners();
