@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gym_adhd/config/colors.dart';
 import 'package:gym_adhd/config/isar_config.dart';
 import 'package:gym_adhd/config/routes.dart';
+import 'package:gym_adhd/providers/planning_provider.dart';
 import 'package:gym_adhd/providers/training_sessions_provider.dart';
-import 'package:gym_adhd/screens/sessions_screen.dart';
+import 'package:gym_adhd/screens/planning_screen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -19,11 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => TrainingSessionsProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => TrainingSessionsProvider()),
+        ChangeNotifierProvider(create: (_) => PlanningProvider()),
+      ],
       builder: (context, _) {
         return MaterialApp(
           routes: routes,
-          home: const SessionsScreen(),
+          home: const PlanningScreen(),
           theme: ThemeData(
             useMaterial3: false,
             brightness: Brightness.dark,

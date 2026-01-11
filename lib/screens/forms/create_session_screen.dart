@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gym_adhd/config/colors.dart';
 import 'package:gym_adhd/config/context.dart';
 import 'package:gym_adhd/models/training_session.dart';
-import 'package:gym_adhd/widgets/gaps.dart';
 import 'package:gym_adhd/widgets/outlined_select_widget.dart';
 
 class CreateSessionScreen extends StatefulWidget {

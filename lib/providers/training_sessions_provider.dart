@@ -76,4 +76,11 @@ class TrainingSessionsProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void deleteAllExercises() {
+    if (selectedSession != null) {
+      selectedSession!.exercises.clear();
+      notifyListeners();
+    }
+  }
 }
